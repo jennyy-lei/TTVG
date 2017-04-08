@@ -1,0 +1,170 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	font-size: 14px;
+	letter-spacing: 0.5px;
+	background-size: 100% 100%;
+	background: linear-gradient(grey to white);
+	overflow-x: hidden;
+}
+
+h1 {
+	font-weight: normal;
+	margin: 0;
+	font-size: 2.5em;
+	letter-spacing: 3px;
+}
+
+h2 {
+	font-weight: normal;
+	font-size: 2em;
+	padding: 1em;
+	margin: 0;
+}
+
+p {
+	font-weight: normal;
+	margin: 0;
+}
+
+/*   HEADER   */
+#header {
+	height: 15%;
+	border-bottom: 1px solid lightgrey;
+}
+
+#site-title {
+	width: 50%;
+	height: 100%;
+	padding-top: 2.5%;
+	padding-left: 5%;
+}
+
+#language-selection {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#language-selection {
+	padding: 0;
+	padding-left: 0.3em;
+	margin: 0.5em;
+	color: grey;
+	cursor: default;
+}
+
+#language-selection li {
+	display: inline;
+}
+
+#language-selection a {
+	color: grey;
+	text-decoration: none;
+	padding: 0 0.2em;
+	transition: 0.3s;
+}
+
+#language-selection a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+/*   SIDEBAR   */
+#sidebar {
+	width: 25%;
+	float: left;
+}
+
+#sidebar ul {
+	margin: 0;
+	padding: 1em 0 2em 10%;
+}
+
+#sidebar li {
+	list-style: none;
+	line-height: 2.5em;
+	padding-left: 15%;
+	border-color: lightgrey;
+	transition: 0.5s;
+}
+
+#sidebar .child-list {
+	padding-left: 20%;
+	font-size: 0.97em;
+}
+
+#sidebar .child-list:before {
+	content: '•';
+	font-size: 0.7em;
+	padding-right: 0.8em;
+}
+
+#sidebar .indent-2 {
+	padding-left: 27%;
+}
+
+#sidebar .parent-list:before {
+	content: '\25bc';
+	font-size: 0.5em;
+	left: -2em;
+	height: 0;
+	display: block;
+	width: 0;
+	position: relative;
+}
+
+#sidebar li:hover {
+	color: grey;
+	cursor: pointer;
+	border-right: 5px solid lightgrey;
+	background-color: rgb(250, 250, 250);
+}
+
+#sidebar a {
+	color: black;
+	text-decoration: none;
+}
+
+/*   PAGE CONTENT   */
+
+#page-content {
+	width: 75%;
+	float: right;
+}
+
+#season-dates {
+	width: 100%;
+}
+
+#season-dates td {
+	padding: 2em 0 1em 0;
+	width: 50%;
+	text-align: center;
+	background-color: rgb(250, 250, 250);
+}
+
+#season-dates p {
+	text-transform: uppercase;
+}
+
+#season-dates ul {
+	padding: 0;
+}
+
+#season-dates li {
+	list-style: none;
+	line-height: 2em;
+}
+
+/*   FOOTER   */
+
+#footer {
+	width: 100%;
+	background-color: rgb(240, 240, 240);
+	clear: both;
+	padding: 20px;
+	text-align: center;
+	font-size: 0.9em;
+	color: rgb(100, 100, 100);
+}
