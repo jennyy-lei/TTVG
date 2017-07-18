@@ -135,9 +135,9 @@
 	//If the current user is login
 	if ( user != null ){
 %>
-						<th>
+						<td>
 							<a href="eventRegister.jsp?eventId=<%=item.getId()%>"><%=user.hasEvent(item) ? p.getProperty("event.unregister") : p.getProperty("event.register")%></a>
-						</th>
+						</td>
 <%
 	}
 %>

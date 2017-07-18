@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import com.ttvg.shared.engine.database.MyDatabaseFeactory;
 import com.ttvg.shared.engine.database.TableRecordOperation;
 import com.ttvg.shared.engine.database.table.Account;
-import com.ttvg.shared.engine.database.table.Audit;
 import com.ttvg.shared.engine.database.table.Event;
 import com.ttvg.shared.engine.database.table.Forum;
 import com.ttvg.shared.engine.database.table.Person;
@@ -57,7 +56,7 @@ public class TestForumInsert{
 
         
         //Log the audit
-        session.save(item.getAudit(account, "Add"));
+        session.save(item.getAudit(account, "Modify"));
         
         transaction.commit();
         System.out.println("Done");

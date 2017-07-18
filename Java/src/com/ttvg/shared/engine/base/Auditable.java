@@ -11,7 +11,7 @@ import com.ttvg.shared.engine.database.table.Audit;
 
 public abstract class Auditable {
 	public Auditable() {
-		created = new Date();
+//		created = new Date();
 	}
 	
 	@Column(name = "Created")
