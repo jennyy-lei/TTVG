@@ -1,0 +1,38 @@
+fieldset {
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+	padding: 10px;
+	padding-bottom: 20px;
+	border-radius: 5px;
+	border: 1px solid grey;
+}
+
+input[type="text"],[type="email"],[type="password"],[type="telephone"] {
+	display: block;
+	margin: 0 auto;
+	width: 60%;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid grey;
+	margin-bottom: 20px;
+}
+
+label {
+	margin-left: 15px;
+	width: 40%;
+	text-align: right;
+}
+
+input[type="submit"] {
+	padding: 8px 5px;
+	border-radius: 5px;
+	border: 1px solid grey;
+	background-color: rgb(230, 230, 230);
+}
+
+#html-content h1 {
+	font-size: 2em;
+	width: 100%;
+	margin: 10px 0;
+}

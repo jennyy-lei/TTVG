@@ -1,0 +1,17 @@
+<Context path="/ttvg"
+          docBase="ttvg"
+          debug="5"
+          reloadable="true"
+          crossContext="true">
+          <Resource name="jdbc/ttvgDB"
+          	auth="Container"
+          	type="javax.sql.DataSource"
+          	description="MySQL database for Discount"
+          	maxActive="100"
+          	maxIdle="30"
+          	maxWait="10000"
+          	username="root"
+          	password="Denis!234"
+          	driverClassName="com.mysql.jdbc.Driver"
+          	url="jdbc:mysql://localhost/ttvg?autoReconnect=true"/>
+</Context>
