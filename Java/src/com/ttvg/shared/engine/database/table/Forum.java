@@ -69,6 +69,15 @@ public class Forum extends EntityResolvable {
 		this.title = title;
 	}
 
+	@Column(name = "Topic")
+	protected String topic;
+	public String getTopic() {
+		return topic;
+	}
+	public void setTopic( String topic ) {
+		this.topic = topic;
+	}
+
 	@Column(name = "Content")
 	protected String content;
 	public String getContent() {
