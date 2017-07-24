@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.proxy.HibernateProxy;
 
 import com.ttvg.shared.engine.api.EntityResolver;
+import com.ttvg.shared.engine.base.Constant;
 
 public class TableRecordOperation {
 	
@@ -102,6 +103,7 @@ public class TableRecordOperation {
 			session = MyDatabaseFeactory.getSession();
 			
 			Query query = session.createQuery(h_sql);
+			query.setMaxResults(Constant.PARAM_MAX_SEARCH_SIZE);
 			for ( Iterator it = query.iterate(); it.hasNext();) {
 	    		Object obj = it.next();
 	    		if ( obj instanceof HibernateProxy )

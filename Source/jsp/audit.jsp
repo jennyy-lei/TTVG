@@ -13,11 +13,12 @@
 
 <%@include file="../includes/resources.jsp" %>
 
+<%@include file="../includes/account.jsp" %>
+
 <%
     Session dbSession = null;
 	Transaction transaction = null;
 	List<Object> auditList = null;
-	Person user = null;
 	String target = null;
 	String action = null;
 	String fromDate = null;
@@ -25,12 +26,6 @@
 	StringBuffer condition = new StringBuffer();
 	
     try{
-		//Get current user
-		Object obj = session.getAttribute("person");
-		if ( obj != null && obj instanceof Person ){
-			user = (Person)obj;
-		}
-		
 		// This step will read hibernate.cfg.xml and prepare hibernate for use
     	dbSession = MyDatabaseFeactory.getSession();
         

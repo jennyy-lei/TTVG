@@ -15,7 +15,7 @@
 	Account account = null;
 
     try{
- 		session.removeAttribute("person");
+ 		session.removeAttribute("account");
 
 		// This step will read hibernate.cfg.xml and prepare hibernate for use
     	dbSession = MyDatabaseFeactory.getSession();
@@ -42,9 +42,9 @@
 <%
 	if ( account != null ){
 		Person person = account.getPerson();
-		session.setAttribute("person",  person);
+		session.setAttribute("account",  account);
 %>
-			<h1><%=p.getProperty("login.success")%> - <%=person.getLastName()%>, <%=person.getGivenName()%></h1>
+			<h1><%=p.getProperty("login.success")%> - <%=person.getLastName()%>, <%=person.getGivenName()%> / <%=account.getEmail()%></h1>
 <%
 	} else {
 %>

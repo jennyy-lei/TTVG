@@ -65,14 +65,11 @@ public class Account extends Auditable{
 
 	@Override
 	public Audit getAudit(Account account, String action) throws Exception {
-		Audit audit = new Audit();
+		Audit audit = super.getAudit(account, action);
 		
-		audit.setAccount(account);
 		audit.setTarget("Account");
 		audit.setContent(this.getEmail());
-		audit.setAction(action);
 		
-		return audit;
-		
+		return audit;		
 	}
 }

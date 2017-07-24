@@ -21,6 +21,8 @@ public class Constant {
 	public static final String PARAM_RELATION_FATHER		= "father";
 	public static final String PARAM_RELATION_GUARDIAN		= "guardian";
 	
+	public static final int PARAM_MAX_SEARCH_SIZE			= 200;
+	
 	public static Map<String, Map<String, String>> ddlListSet = new Hashtable<String, Map<String, String>>();
 	
 	public static void SetConfig(Properties p, String locale){

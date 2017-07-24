@@ -30,7 +30,7 @@ public class Forum extends EntityResolvable {
 		this.id = id;
 	}
 	 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "PersonId")
     protected Person person;
     public Person getPerson() {
@@ -40,7 +40,7 @@ public class Forum extends EntityResolvable {
 		this.person = person;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "forum")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "forum", cascade = CascadeType.ALL)
 	protected Set<Forum> followingForums = new HashSet<Forum>(0);
 	public Set<Forum> getFollowingForums() {
 		return this.followingForums;
@@ -50,7 +50,7 @@ public class Forum extends EntityResolvable {
 		this.followingForums = followingForums;
 	}
 	
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "ForumId")
     protected Forum forum;
     public Forum getForum() {
@@ -126,15 +126,12 @@ public class Forum extends EntityResolvable {
 
 	@Override
 	public Audit getAudit(Account account, String action) throws Exception {
-		Audit audit = new Audit();
+		Audit audit = super.getAudit(account, action);
 		
-		audit.setAccount(account);
 		audit.setTarget("Forum");
 		audit.setContent(this.getTitle());
-		audit.setAction(action);
 		
-		return audit;
-		
+		return audit;		
 	}
 	
 }

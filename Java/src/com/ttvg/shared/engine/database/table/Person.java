@@ -184,14 +184,11 @@ public class Person extends EntityResolvable {
 
 	@Override
 	public Audit getAudit(Account account, String action) throws Exception {
-		Audit audit = new Audit();
+		Audit audit = super.getAudit(account, action);
 		
-		audit.setAccount(account);
 		audit.setTarget("Person");
 		audit.setContent(this.lastName + ", " + this.givenName);
-		audit.setAction(action);
 		
-		return audit;
-		
+		return audit;		
 	}
 }

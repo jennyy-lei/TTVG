@@ -1,5 +1,6 @@
 package com.ttvg.shared.engine.database.table;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 
@@ -85,6 +86,26 @@ public class Event extends EntityResolvable{
         this.toDate = toDate;
     }
 	
+	@Column(name = "FromTime")
+    @Temporal(TemporalType.TIME)
+    protected Date fromTime;
+    public Date getFromTime() {
+        return fromTime;
+    }
+    public void setFromTime(Date fromTime) {
+        this.fromTime = fromTime;
+    }
+	
+	@Column(name = "ToTime")
+    @Temporal(TemporalType.TIME)
+    protected Date ToTime;
+    public Date getToTime() {
+        return ToTime;
+    }
+    public void setToTime(Date ToTime) {
+        this.ToTime = ToTime;
+    }
+	
 	@Column(name = "DateTime")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dateTime;
@@ -118,15 +139,12 @@ public class Event extends EntityResolvable{
 
 	@Override
 	public Audit getAudit(Account account, String action) throws Exception {
-		Audit audit = new Audit();
+		Audit audit = super.getAudit(account, action);
 		
-		audit.setAccount(account);
 		audit.setTarget("Event");
 		audit.setContent(this.getTitle());
-		audit.setAction(action);
 		
-		return audit;
-		
+		return audit;		
 	}
 
 }

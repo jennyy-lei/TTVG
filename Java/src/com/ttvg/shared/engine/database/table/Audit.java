@@ -63,8 +63,10 @@ public class Audit extends Auditable{
 		this.action = action;
 	}
 
+
 	@Override
 	public Audit getAudit(Account account, String action) throws Exception {
 		return null;
+		
 	}
 }

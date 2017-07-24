@@ -6,7 +6,7 @@
 
 <%
     try{
- 		session.removeAttribute("person");
+ 		session.removeAttribute("account");
        
     }catch(Exception e){
 		System.out.println(e.getMessage());

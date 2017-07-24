@@ -3,9 +3,11 @@
 <%@page import="java.util.List" %>
 <%@page import="org.hibernate.Session" %>
 <%@page import="org.hibernate.Transaction" %>
+<%@page import="com.ttvg.shared.engine.base.Security" %>
 <%@page import="com.ttvg.shared.engine.database.MyDatabaseFeactory" %>
 <%@page import="com.ttvg.shared.engine.database.TableRecordOperation" %>
 <%@page import="com.ttvg.shared.engine.database.table.Event" %>
+<%@page import="com.ttvg.shared.engine.database.table.Account" %>
 <%@page import="com.ttvg.shared.engine.database.table.Person" %>
 
 <!DOCTYPE html>
@@ -13,54 +15,69 @@
 
 <%@include file="../includes/resources.jsp" %>
 
+<%@include file="../includes/account.jsp" %>
+
 <%
     Session dbSession = null;
 	Transaction transaction = null;
 	List<Object> eventList = null;
-	Person user = null;
+	String op = null;
+	String eventId = null;
 	String title = null;
 	String content = null;
+	Event event = null;
 	
     try{
-		//Get current user
-		Object obj = session.getAttribute("person");
-		if ( obj != null && obj instanceof Person ){
-			user = (Person)obj;
-		}
-		
 		// This step will read hibernate.cfg.xml and prepare hibernate for use
     	dbSession = MyDatabaseFeactory.getSession();
         
 		//Get Post data
 		request.setCharacterEncoding("UTF-8");
+		op = request.getParameter("op");
+		eventId = request.getParameter("eventId");
 		title = request.getParameter("title");
 		content = request.getParameter("content");
 		String eventType = request.getParameter("eventType");
 		String eventCategory = request.getParameter("eventCategory");
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
+		if ( op == null || op.length() == 0 )
+			op = "Add";
 		if ( title != null && title.length() > 0 )
 			title = new String(title.getBytes("ISO8859_1"), "UTF-8");
 		if ( content != null && content.length() > 0 )
 			content = new String(content.getBytes("ISO8859_1"), "UTF-8");
 		
+		if ( eventId != null && eventId.length() > 0 ) {
+			event = TableRecordOperation.getRecord(Integer.parseInt(eventId), Event.class);
+		}
+		
 		//Save the posted event item if not empty
-		if ( (title != null && title.length() > 0) || (content != null && content.length() > 0) ) {
+		if ( (event != null) || (title != null && title.length() > 0) ) {
 			transaction = dbSession.beginTransaction();
-			Event item = new Event();
-			item.setDateTime(new Date());
-			item.setTitle(title);
-			item.setContent(content);
-			item.setType(eventType);
-			item.setCategory(eventCategory);
+			if ( event == null && "add".equalsIgnoreCase(op) && (title != null && title.length() > 0) ){
+				event = new Event();
+				event.setDateTime(new Date());
+				event.setTitle(title);
+				event.setContent(content);
+				event.setType(eventType);
+				event.setCategory(eventCategory);
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				if ( fromDate != null && fromDate.length() > 0 )
+					event.setFromDate(sdf.parse(fromDate));
+				if ( toDate != null && toDate.length() > 0 )
+					event.setToDate(sdf.parse(toDate));
+				
+				dbSession.save(event);			
+			} else if ( "remove".equalsIgnoreCase(op) && event != null ){
+				dbSession.delete(event);		
+			}         
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			if ( fromDate != null && fromDate.length() > 0 )
-				item.setFromDate(sdf.parse(fromDate));
-			if ( toDate != null && toDate.length() > 0 )
-				item.setToDate(sdf.parse(toDate));
+			//Log the audit
+			if ( event != null )
+				dbSession.save(event.getAudit(account, op));
 			
-			dbSession.save(item);			
 			transaction.commit();
 		}
         
@@ -112,9 +129,19 @@
 						<th><%=p.getProperty("event.category")%></th>
 						<th><%=p.getProperty("event.date.from")%></th>
 						<th><%=p.getProperty("event.date.to")%></th>
+						<th><%=p.getProperty("event.time.from")%></th>
+						<th><%=p.getProperty("event.time.to")%></th>
 <%
 	//If the current user is login
 	if ( user != null ){
+%>
+<%
+		//If the current user is login
+		if ( Security.CheckPrivilege("Event", "Remove", account) ){
+%>
+						<th><%=p.getProperty("event.remove")%></th>
+<%
+		}
 %>
 						<th><%=p.getProperty("event.register")%></th>
 <%
@@ -131,9 +158,19 @@
 						<td><%=item.getCategory()%></td>
 						<td><%=item.getFromDate()%></td>
 						<td><%=item.getToDate()%></td>
+						<td><%=item.getFromTime()%></td>
+						<td><%=item.getToTime()%></td>
 <%
 	//If the current user is login
 	if ( user != null ){
+%>
+<%
+		//If the current user is login
+		if ( Security.CheckPrivilege("Event", "Remove", account) ){
+%>
+						<td><a href="event.jsp?eventId=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>&op=Remove"><%=p.getProperty("event.remove")%></a></td>
+<%
+		}
 %>
 						<td>
 							<a href="eventRegister.jsp?eventId=<%=item.getId()%>"><%=user.hasEvent(item) ? p.getProperty("event.unregister") : p.getProperty("event.register")%></a>
@@ -142,10 +179,12 @@
 	}
 %>
 					</tr>
+<%
+		}
+%>
 				</table>
 			</div>
 <%
-		}
 	} else {
 %>
 <%=p.getProperty("search.noresult")%>
@@ -162,6 +201,7 @@
 			<fieldset>
 				<form action="event.jsp" method="POST">
 					<input type="hidden" name="btnLanguage" value="<%=newLocaleStr%>">
+					<input type="hidden" name="op" value="Add">
 					<table style="width:100%">
 						<tr><td align="right"><%=p.getProperty("event.type")%>:</td>
 							<td>
@@ -188,6 +228,8 @@
 						<tr><td align="right"><%=p.getProperty("event.content")%>:</td><td><textarea cols="60" rows="5" name="content"></textarea></td></tr>
 						<tr><td align="right"><%=p.getProperty("event.date.from")%>:</td><td><input type="date" name="fromDate"></td></tr>
 						<tr><td align="right"><%=p.getProperty("event.date.to")%>:</td><td><input type="date" name="toDate"></td></tr>
+						<tr><td align="right"><%=p.getProperty("event.time.from")%>:</td><td><input type="time" name="fromTime"></td></tr>
+						<tr><td align="right"><%=p.getProperty("event.time.to")%>:</td><td><input type="time" name="toTime"></td></tr>
 						<tr><td colspan="2" align="center"><input type="submit" value="<%=p.getProperty("event.button.submit")%>"></td></tr>
 					</table> 
 				</form>
