@@ -90,6 +90,8 @@
 									<option value="Add">Add</option>
 									<option value="Modify">Modify</option>
 									<option value="Remove">Remove</option>
+									<option value="Register">Register</option>
+									<option value="Unregister">Unregister</option>
 								</select>
 							</td>
 							<td><input type="date" name="fromDate"></td>

@@ -136,8 +136,8 @@
 	if ( user != null ){
 %>
 <%
-		//If the current user is login
-		if ( Security.CheckPrivilege("Event", "Remove", account) ){
+		//If the current user is topic admin
+		if ( Security.CheckPrivilege("Topic", "Remove", account) ){
 %>
 						<th><%=p.getProperty("event.remove")%></th>
 <%
@@ -153,7 +153,9 @@
 			Event item = ((Event)obj);
 %>
 					<tr>
-						<td><%=item.getTitle()%></td>
+						<td>
+							<a href="eventRegister.jsp?eventId=<%=item.getId()%>"><%=item.getTitle()%></a>
+						</td>
 						<td><%=item.getType()%></td>
 						<td><%=item.getCategory()%></td>
 						<td><%=item.getFromDate()%></td>
@@ -166,14 +168,14 @@
 %>
 <%
 		//If the current user is login
-		if ( Security.CheckPrivilege("Event", "Remove", account) ){
+		if ( Security.CheckPrivilege("Topic", "Remove", account) ){
 %>
 						<td><a href="event.jsp?eventId=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>&op=Remove"><%=p.getProperty("event.remove")%></a></td>
 <%
 		}
 %>
 						<td>
-							<a href="eventRegister.jsp?eventId=<%=item.getId()%>"><%=user.hasEvent(item) ? p.getProperty("event.unregister") : p.getProperty("event.register")%></a>
+							<a href="eventRegister.jsp?eventId=<%=item.getId()%>&userId=<%=user.getId()%>&btnLanguage=<%=newLocaleStr%>&op=<%=user.hasEvent(item) ? "Unregister" : "Register"%>"><%=user.hasEvent(item) ? p.getProperty("event.unregister") : p.getProperty("event.register")%></a>
 						</td>
 <%
 	}
@@ -194,7 +196,7 @@
 		</div>
 <%
 	//If the current user is login
-	if ( user != null ){
+	if ( user != null && Security.CheckPrivilege("Topic", "Add", account) ){
 %>
 		<hr/>
 		<div id = "page-form">

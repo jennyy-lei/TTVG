@@ -171,7 +171,7 @@
 					<img src="../images/<%=person.getImage()%>" class="user-photo">
 <%
 			//If the current user is login
-			if ( Security.CheckPrivilege("Forum", "Remove", account) ){
+			if ( Security.CheckPrivilege("Topic", "Remove", account) ){
 %>
 					<a href="forum.jsp?forumId=<%=forumId%>&id=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>&op=Remove"><%=p.getProperty("forum.followup.remove")%></a>
 <%

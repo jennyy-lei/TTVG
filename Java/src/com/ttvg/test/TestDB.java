@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.ttvg.shared.engine.database.MyDatabaseFeactory;
+import com.ttvg.shared.engine.database.TableRecordOperation;
 import com.ttvg.shared.engine.database.table.Person;
 
 public class TestDB{
@@ -17,6 +18,10 @@ public class TestDB{
         Transaction transaction = session.beginTransaction();
         //Create new instance of Person and set values in it by reading them from form object
     	System.out.println("Inserting Record");
+    	Person person = TableRecordOperation.getRecord(1, Person.class);
+    	int size = person.getEvents().size();
+    	boolean b = person.hasEvent(1);
+    	boolean b2 = person.hasEvent(2);
     	Person item = new Person();
         //item.setId(3);
         item.setGivenName("Given Name Two");
