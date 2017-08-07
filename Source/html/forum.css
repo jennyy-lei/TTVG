@@ -1,3 +1,11 @@
+.title {
+	margin: 5px 0;
+}
+
+.title p {
+	margin: 0;
+}
+
 .forum-item-container {
 	padding: 10px;
 	border-bottom: solid 1px lightgrey;
@@ -5,10 +13,6 @@
 	line-height: 1.2em;
 	cursor: pointer;
 	transition: 0.5s;
-}
-
-.forum-item-container:hover {
-	background-color: rgb(240, 240, 240);
 }
 
 .user-photo {
@@ -22,10 +26,11 @@
 
 
 .forum-text p {
-	padding: 10px 5px;
+	padding: 0 5px;
 	padding-right: 50px;
 	font-size: 0.75em;
 	line-height: 1.0em;
+	margin-bottom: 0;
 }
 
 .comment-count {
@@ -39,63 +44,30 @@
 	display: inline-block;
 	width: 15px;
 	height: 15px;
-	border: 2px solid grey;
-	border-radius: 5px;
 	margin-right: 5px;
 	margin-top: 10px;
 	text-align: center;
 	line-height: 16px;
-	transition: 0.3s;
+	border-bottom: 1px solid black;
 }
 
-.page-index:hover {
-	background-color: grey;
-	color: white;
-}
-
-#btn-new-forum {
-	width: 98%;
-	margin: 10px 10px;
+fieldset, textarea, input[type="text"], input[type="submit"] {
+	padding: 6px;
+	border: 1px solid grey;
+	border-radius: 5px;
 	background-color: transparent;
-	border: none;
-	text-decoration: underline;
-	font-weight: bold;
-	cursor: pointer;
-	padding: 15px;
-	color: grey;
-	transition: 0.3s;
+	margin: 3px;
 }
 
-#btn-new-forum:hover {
-	background-color: rgb(240, 240, 240);
-	color: black;
-}
-
-.comment-section {
-	margin-left: 50px;
+textarea, input[type="text"] {
+	width: 70%;
 }
 
 textarea {
 	resize: none;
 	vertical-align: middle;
-	padding: 6px;
-	border-radius: 5px;
-	background-color: transparent;
 }
 
 input[type="submit"] {
-	width: 75px;
-	padding: 5px 0;
-	font-size: 1.5em;
-	font-weight: bold;
-	border-radius: 3px;
-	border: 1px solid grey;
-	background-color: rgb(250, 250, 250);
-}
-
-.comment {
-	margin: 0 0 20px 0;
-	padding-left: 10px;
-	background-color: rgb(240, 240, 240);
-	border-left: 5px solid grey;
+	font-size: 1em;
 }

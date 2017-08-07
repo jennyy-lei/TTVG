@@ -109,8 +109,10 @@
 %>
 
 <html>
-	<body>
+	<head>
 		<link rel = "stylesheet" type = "text/css" href = "../html/forum.css">
+	</head>
+	<body>
 <%
 	//If the current forum item is not empty
 	if ( id != null && id.length() > 0 ){
@@ -126,11 +128,10 @@
 %>
 		<div id = "page-title">
 			<div class="title">
-				<p><%=tmp.toString()%> 
-				</p>
+				<p><%=tmp.toString()%></p>
 			</div>
 		</div>
-		<hr/>
+		<hr width = "100%" color = "lightgrey" size = "1px" noshade/>
 <%
 	}
 %>
