@@ -63,6 +63,18 @@ public class Account extends Auditable{
 		this.password = password;
 	}
 
+	@Column(name = "Disabled")
+	protected Boolean disabled;
+	public Boolean getDisabled() {
+		return disabled;
+	}
+	public Boolean isDisabled() {
+		return disabled;
+	}
+	public void setDisabled( Boolean disabled ) {
+		this.disabled = disabled;
+	}
+
 	@Override
 	public Audit getAudit(Account account, String action) throws Exception {
 		Audit audit = super.getAudit(account, action);

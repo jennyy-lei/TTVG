@@ -80,7 +80,7 @@
 						<tr><td>
 								<select id="mySelectTarget" name="target">
 									<option value="">All</option>
-									<option value="User">User</option>
+									<option value="Account">Account</option>
 									<option value="Person">Person</option>
 									<option value="Forum">Forum</option>
 									<option value="Event">Event</option>

@@ -13,8 +13,8 @@ public class Constant {
 	public static final String LOCALE_EN					= "en";
 	
 	public static final String PARAM_ROLE_GUEST				= "guest";
-	public static final String PARAM_ROLE_ADMIN				= "administrator";
-	public static final String PARAM_ROLE_SUPER				= "superuser";
+	public static final String PARAM_ROLE_ADMIN				= "admin";
+	public static final String PARAM_ROLE_TOPIC				= "topic";
 	public static final String PARAM_ROLE_USER				= "user";
 
 	public static final String PARAM_RELATION_MOTHER		= "mother";
