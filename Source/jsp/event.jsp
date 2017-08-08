@@ -4,6 +4,7 @@
 <%@page import="org.hibernate.Session" %>
 <%@page import="org.hibernate.Transaction" %>
 <%@page import="com.ttvg.shared.engine.base.Security" %>
+<%@page import="com.ttvg.shared.engine.base.Constant" %>
 <%@page import="com.ttvg.shared.engine.database.MyDatabaseFeactory" %>
 <%@page import="com.ttvg.shared.engine.database.TableRecordOperation" %>
 <%@page import="com.ttvg.shared.engine.database.table.Event" %>
@@ -42,7 +43,7 @@
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
 		if ( op == null || op.length() == 0 )
-			op = "Add";
+			op = Constant.PARAM_ACTION_ADD;
 		if ( title != null && title.length() > 0 )
 			title = new String(title.getBytes("ISO8859_1"), "UTF-8");
 		if ( content != null && content.length() > 0 )
@@ -55,7 +56,7 @@
 		//Save the posted event item if not empty
 		if ( (event != null) || (title != null && title.length() > 0) ) {
 			transaction = dbSession.beginTransaction();
-			if ( event == null && "add".equalsIgnoreCase(op) && (title != null && title.length() > 0) ){
+			if ( event == null && Constant.PARAM_ACTION_ADD.equalsIgnoreCase(op) && (title != null && title.length() > 0) ){
 				event = new Event();
 				event.setDateTime(new Date());
 				event.setTitle(title);
@@ -70,7 +71,7 @@
 					event.setToDate(sdf.parse(toDate));
 				
 				dbSession.save(event);			
-			} else if ( "remove".equalsIgnoreCase(op) && event != null ){
+			} else if ( Constant.PARAM_ACTION_REMOVE.equalsIgnoreCase(op) && event != null ){
 				dbSession.delete(event);		
 			}         
 			
@@ -137,7 +138,7 @@
 %>
 <%
 		//If the current user is topic admin
-		if ( Security.CheckPrivilege("Topic", "Remove", account) ){
+		if ( Security.CheckPrivilege("Topic", Constant.PARAM_ACTION_REMOVE, account) ){
 %>
 						<th><%=p.getProperty("event.remove")%></th>
 <%
@@ -168,7 +169,7 @@
 %>
 <%
 		//If the current user is login
-		if ( Security.CheckPrivilege("Topic", "Remove", account) ){
+		if ( Security.CheckPrivilege("Topic", Constant.PARAM_ACTION_REMOVE, account) ){
 %>
 						<td><a href="event.jsp?eventId=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>&op=Remove"><%=p.getProperty("event.remove")%></a></td>
 <%
@@ -196,7 +197,7 @@
 		</div>
 <%
 	//If the current user is login
-	if ( user != null && Security.CheckPrivilege("Topic", "Add", account) ){
+	if ( user != null && Security.CheckPrivilege("Topic", Constant.PARAM_ACTION_ADD, account) ){
 %>
 		<hr/>
 		<div id = "page-form">

@@ -1,6 +1,7 @@
 <%@page import="java.util.List" %>
 <%@page import="org.hibernate.Session" %>
 <%@page import="org.hibernate.Transaction" %>
+<%@page import="com.ttvg.shared.engine.base.Constant" %>
 <%@page import="com.ttvg.shared.engine.database.MyDatabaseFeactory" %>
 <%@page import="com.ttvg.shared.engine.database.TableRecordOperation" %>
 <%@page import="com.ttvg.shared.engine.database.table.Event" %>
@@ -100,7 +101,7 @@
 
 <html>
 	<body>
-<p>op=<%=op%>/userId=<%=userId%>/toUser.getEvents()=<%=toUser!=null?toUser.getEvents().size():0%>/eventId=<%=eventId%> </p>
+<!--<p>op=<%=op%>/userId=<%=userId%>/toUser.getEvents()=<%=toUser!=null?toUser.getEvents().size():0%>/eventId=<%=eventId%> </p>-->
 		<link rel = "stylesheet" type = "text/css" href = "../html/forum.css">
 <%
 	//Display the current event list

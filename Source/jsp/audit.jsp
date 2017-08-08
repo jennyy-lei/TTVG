@@ -3,6 +3,7 @@
 <%@page import="java.util.List" %>
 <%@page import="org.hibernate.Session" %>
 <%@page import="org.hibernate.Transaction" %>
+<%@page import="com.ttvg.shared.engine.base.Constant" %>
 <%@page import="com.ttvg.shared.engine.database.MyDatabaseFeactory" %>
 <%@page import="com.ttvg.shared.engine.database.TableRecordOperation" %>
 <%@page import="com.ttvg.shared.engine.database.table.Audit" %>
@@ -80,6 +81,7 @@
 								<select id="mySelectTarget" name="target">
 									<option value="">All</option>
 									<option value="User">User</option>
+									<option value="Person">Person</option>
 									<option value="Forum">Forum</option>
 									<option value="Event">Event</option>
 								</select>

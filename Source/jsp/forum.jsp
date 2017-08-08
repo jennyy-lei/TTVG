@@ -2,6 +2,7 @@
 <%@page import="java.util.List" %>
 <%@page import="org.hibernate.Session" %>
 <%@page import="org.hibernate.Transaction" %>
+<%@page import="com.ttvg.shared.engine.base.Constant" %>
 <%@page import="com.ttvg.shared.engine.base.Security" %>
 <%@page import="com.ttvg.shared.engine.database.MyDatabaseFeactory" %>
 <%@page import="com.ttvg.shared.engine.database.TableRecordOperation" %>
@@ -69,7 +70,7 @@
 				}
 				
 				dbSession.save(cuForum);
-			} else if ( "remove".equalsIgnoreCase(op) && cuForum != null ){
+			} else if ( Constant.PARAM_ACTION_REMOVE.equalsIgnoreCase(op) && cuForum != null ){
 				dbSession.delete(cuForum);		
 			}         
 			
@@ -171,7 +172,7 @@
 					<img src="../images/<%=person.getImage()%>" class="user-photo">
 <%
 			//If the current user is login
-			if ( Security.CheckPrivilege("Topic", "Remove", account) ){
+			if ( Security.CheckPrivilege("Topic", Constant.PARAM_ACTION_REMOVE, account) ){
 %>
 					<a href="forum.jsp?forumId=<%=forumId%>&id=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>&op=Remove"><%=p.getProperty("forum.followup.remove")%></a>
 <%

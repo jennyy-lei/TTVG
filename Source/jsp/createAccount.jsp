@@ -23,6 +23,7 @@
 	String email = null;
 	String address = null;
 	String password = null;
+	String confirmPassword = null;
 	
 	Account acc = null;
 	Person person = null;
@@ -43,11 +44,12 @@
 		email = request.getParameter("email");
 		address = request.getParameter("address");
 		password = request.getParameter("password");
+		confirmPassword = request.getParameter("confirmPassword");
 		if ( chineseName != null && chineseName.length() > 0 )
 			chineseName = new String(chineseName.getBytes("ISO8859_1"), "UTF-8");
 		
 		//Save the posted account item if not empty
-		if ( (firstName != null && firstName.length() > 0) && (lastName != null && lastName.length() > 0) ) {
+		if ( (firstName != null && firstName.length() > 0) && (lastName != null && lastName.length() > 0) && password.equals(confirmPassword) ) {
 			transaction = dbSession.beginTransaction();
 			acc = new Account();
 			acc.setRole(Constant.PARAM_ROLE_USER);

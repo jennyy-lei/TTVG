@@ -2,6 +2,7 @@
 <%@page import="java.util.List" %>
 <%@page import="org.hibernate.Session" %>
 <%@page import="org.hibernate.Transaction" %>
+<%@page import="com.ttvg.shared.engine.base.Constant" %>
 <%@page import="com.ttvg.shared.engine.base.Security" %>
 <%@page import="com.ttvg.shared.engine.database.MyDatabaseFeactory" %>
 <%@page import="com.ttvg.shared.engine.database.TableRecordOperation" %>
@@ -41,7 +42,7 @@
 		title = request.getParameter("title");
 		content = request.getParameter("content");
 		if ( op == null || op.length() == 0 )
-			op = "Add";
+			op = Constant.PARAM_ACTION_ADD;
 		if ( title != null && title.length() > 0 )
 			title = new String(title.getBytes("ISO8859_1"), "UTF-8");
 		if ( content != null && content.length() > 0 )
@@ -54,7 +55,7 @@
 		//Save the posted forum item if not empty
 		if ( ((forum != null) || (title != null && title.length() > 0)) && (topic != null && topic.length() > 0) ) {
 			transaction = dbSession.beginTransaction();
-			if ( forum == null && "add".equalsIgnoreCase(op) && (title != null && title.length() > 0) ){
+			if ( forum == null && Constant.PARAM_ACTION_ADD.equalsIgnoreCase(op) && (title != null && title.length() > 0) ){
 				forum = new Forum();
 				forum.setDateTime(new Date());
 				forum.setTopic(topic);
@@ -68,10 +69,6 @@
 				dbSession.delete(forum);		
 			}         
 			
-			//Log the audit
-			if ( forum != null )
-				dbSession.save(forum.getAudit(account, op));
-			
 			transaction.commit();
 		}
         
@@ -83,6 +80,26 @@
     	if (dbSession != null) {
     		dbSession.flush();
     		dbSession.close();
+    	}
+	}
+		
+    try{
+		// This step will read hibernate.cfg.xml and prepare hibernate for use
+    	dbSession = MyDatabaseFeactory.getSession();
+			
+		//Log the audit
+		if ( forum != null )
+			dbSession.save(forum.getAudit(account, op));
+    }catch(Exception e){
+		System.out.println(e.getMessage());
+    }finally{
+      // Close the session after work
+    	if (dbSession != null) {
+		    try{
+				dbSession.flush();
+				dbSession.close();
+			}catch(Exception ex1){
+			}				
     	}
 	}
 		
@@ -158,7 +175,7 @@
 					<img src="../images/<%=person.getImage()%>" class="user-photo">
 <%
 			//If the current user is login
-			if ( Security.CheckPrivilege("Topic", "Remove", account) ){
+			if ( Security.CheckPrivilege("Topic", Constant.PARAM_ACTION_REMOVE, account) ){
 %>
 					<a href="topic.jsp?topic=<%=topic%>&forumId=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>&op=Remove"><%=p.getProperty("forum.topic.remove")%></a>
 <%
@@ -194,7 +211,7 @@
 		</div>
 <%
 	//If the current user is login
-	if ( topic != null && topic.length() > 0 && Security.CheckPrivilege("Topic", "Add", account) ){
+	if ( topic != null && topic.length() > 0 && Security.CheckPrivilege("Topic", Constant.PARAM_ACTION_ADD, account) ){
 %>
 		<hr/>
 		<div id = "page-form">

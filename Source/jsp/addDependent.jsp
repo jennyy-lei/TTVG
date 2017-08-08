@@ -13,6 +13,8 @@
 
 <%@include file="../includes/resources.jsp" %>
 
+<%@include file="../includes/account.jsp" %>
+
 <%
     Session dbSession = null;
 	Transaction transaction = null;
@@ -26,19 +28,12 @@
 	String mobile = null;
 	String relation = null;
 	
-	Person user = null;
 	Person child = null;
 	
 	boolean isEdit = false;
 	boolean isSuccess = false;
 	
     try{
-		//Get current user
-		Object obj = session.getAttribute("person");
-		if ( obj != null && obj instanceof Person ){
-			user = (Person)obj;
-		}
-		
 		if ( user != null ) {
 			op = request.getParameter("op");
 			if ( op != null && op.length() > 0 ) {
@@ -46,13 +41,13 @@
 				dbSession = MyDatabaseFeactory.getSession();
 				transaction = dbSession.beginTransaction();
 				
-				//Get Get data
+				//Get data
 				personId = request.getParameter("personId");
 				if ( personId != null && personId.length() > 0 ) {
 					//Locate the current child
 					child = TableRecordOperation.getRecord(Integer.parseInt(personId), Person.class);
 				}
-				if ( "remove".equalsIgnoreCase(op) ) {
+				if ( Constant.PARAM_ACTION_REMOVE.equalsIgnoreCase(op) ) {
 				
 					child = TableRecordOperation.getRecord(Integer.parseInt(personId), Person.class);
 					if ( child != null ) {
@@ -60,7 +55,7 @@
 						isSuccess = true;
 					}
 				
-				} else if ( "edit".equalsIgnoreCase(op) ){
+				} else if ( "Edit".equalsIgnoreCase(op) ){
 					isEdit = true;
 				} else {
 					//Get Post data
@@ -96,7 +91,7 @@
 						else if ( Constant.PARAM_RELATION_GUARDIAN.equalsIgnoreCase(relation) )
 							child.setGuardian(user);
 						
-						if ( "create".equalsIgnoreCase(op) ){
+						if ( Constant.PARAM_ACTION_ADD.equalsIgnoreCase(op) ){
 							dbSession.save(child);
 						} else {
 							dbSession.update(child);
@@ -105,11 +100,32 @@
 						isSuccess = true;
 					}
 				}
+					
 				transaction.commit();
 			}
         }
     }catch(Exception e){
 		if ( transaction != null ) transaction.rollback();
+		System.out.println(e.getMessage());
+    }finally{
+      // Close the session after work
+    	if (dbSession != null) {
+		    try{
+				dbSession.flush();
+				dbSession.close();
+			}catch(Exception ex1){
+			}				
+    	}
+	}
+		
+    try{
+		// This step will read hibernate.cfg.xml and prepare hibernate for use
+    	dbSession = MyDatabaseFeactory.getSession();
+			
+		//Log the audit
+		if ( child != null )
+			dbSession.save(child.getAudit(account, op));
+    }catch(Exception e){
 		System.out.println(e.getMessage());
     }finally{
       // Close the session after work
@@ -144,6 +160,7 @@
 
 <html>
 	<body>
+<!--	<%=op%>/<%=child != null ? child.getGivenName() : "Not know" %>/<%=lastName%>-->
 <%
 	//Display the current event list
 	if ( childrenList != null ){
@@ -185,10 +202,10 @@
 %>
 						</td>
 						<td>
-							<a href="addDependent.jsp?personId=<%=item.getId()%>&op=edit"><%=p.getProperty("addDependent.button.edit")%></a>
+							<a href="addDependent.jsp?personId=<%=item.getId()%>&op=Edit"><%=p.getProperty("addDependent.button.edit")%></a>
 						</td>
 						<td>
-							<a href="addDependent.jsp?personId=<%=item.getId()%>&op=remove"><%=p.getProperty("addDependent.button.remove")%></a>
+							<a href="addDependent.jsp?personId=<%=item.getId()%>&op=Remove"><%=p.getProperty("addDependent.button.remove")%></a>
 						</td>
 					</tr>
 <%
@@ -216,7 +233,7 @@
 			<h1><%=p.getProperty("addDependent.title")%></h1>
 			<fieldset>
 				<form action="addDependent.jsp" method="POST">
-					<input type="hidden" name="op" value="<%=child != null ? "update" : "create"%>">
+					<input type="hidden" name="op" value="<%=child != null ? Constant.PARAM_ACTION_MODIFY : Constant.PARAM_ACTION_ADD%>">
 					<input type="hidden" name="personId" value="<%=child != null ? child.getId() : ""%>">
 					<table style="width:100%">
 						<tr><td align="right"><%=p.getProperty("addDependent.sn")%><font color="red">*</font>:</td><td><input type="text" name="firstName" value="<%=child != null ? child.getGivenName() : ""%>" required></td></tr>

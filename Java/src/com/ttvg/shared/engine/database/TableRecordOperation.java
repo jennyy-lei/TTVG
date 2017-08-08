@@ -30,11 +30,7 @@ public class TableRecordOperation {
 		try{ 
 			session = MyDatabaseFeactory.getSession();
 
-			ret =  session.load(cls, id);
-            Hibernate.initialize(ret);
-
-            if ( ret instanceof EntityResolver )
-            	((EntityResolver)ret).resolve();
+			ret =  getRecord(session, id, cls);
             
 	    }catch(Exception e){
 	    	throw e;
@@ -45,6 +41,28 @@ public class TableRecordOperation {
 	    	}
 	    }
 	    
+	    return ret;
+		
+	}
+	
+	/**
+	 * Fetch the get a record from DB by the Hibernate SQL
+	 * 
+	 * @param id A Hibernate entry ID
+	 * @return 
+	 * @return A record, null if not found
+	 */
+	public static synchronized <T> T getRecord(Session session, int id, Class<T> cls) throws Exception {
+		
+		T ret = null;
+		
+		ret =  session.load(cls, id);
+		Hibernate.initialize(ret);
+
+		if ( ret instanceof EntityResolver )
+			((EntityResolver)ret).resolve();
+            
+
 	    return ret;
 		
 	}
