@@ -159,6 +159,9 @@
 %>
 
 <html>
+	<head>
+		<script src="../html/inputValidation.js"></script>
+	<head>
 	<body>
 <!--	<%=op%>/<%=child != null ? child.getGivenName() : "Not know" %>/<%=lastName%>-->
 <%
@@ -236,8 +239,8 @@
 					<input type="hidden" name="op" value="<%=child != null ? Constant.PARAM_ACTION_MODIFY : Constant.PARAM_ACTION_ADD%>">
 					<input type="hidden" name="personId" value="<%=child != null ? child.getId() : ""%>">
 					<table style="width:100%">
-						<tr><td align="right"><%=p.getProperty("addDependent.sn")%><font color="red">*</font>:</td><td><input type="text" name="firstName" value="<%=child != null ? child.getGivenName() : ""%>" required></td></tr>
-						<tr><td align="right"><%=p.getProperty("addDependent.gn")%><font color="red">*</font>:</td><td><input type="text" name="lastName" value="<%=child != null ? child.getLastName() : ""%>" required></td></tr>
+						<tr><td align="right"><%=p.getProperty("addDependent.sn")%><font color="red">*</font>:</td><td><input type="text" name="firstName" value="<%=child != null ? child.getGivenName() : ""%>" onchange="validateText(this);" required></td></tr>
+						<tr><td align="right"><%=p.getProperty("addDependent.gn")%><font color="red">*</font>:</td><td><input type="text" name="lastName" value="<%=child != null ? child.getLastName() : ""%>" onchange="validateText(this);" required></td></tr>
 						<tr><td align="right"><%=p.getProperty("addDependent.cn")%>:</td><td><input type="text" value="<%=child != null ? child.getChineseName() : ""%>" name="chineseName"></td></tr>
 						<tr><td align="right"><%=p.getProperty("addDependent.tel")%>:</td><td><input type="text" value="<%=child != null ? child.getPhone() : ""%>" name="phone"></td></tr>
 						<tr><td align="right"><%=p.getProperty("addDependent.mobile")%>:</td><td><input type="text" value="<%=child != null ? child.getMobile() : ""%>" name="mobile"></td></tr>

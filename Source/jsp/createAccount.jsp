@@ -88,6 +88,9 @@
 %>
 
 <html>
+	<head>
+		<script src="../html/inputValidation.js"></script>
+	</head>
 	<body>
 		<div id = "html-content">
 <%
@@ -97,14 +100,14 @@
 			<fieldset>
 				<form action="createAccount.jsp" method="POST">
 					<table style="width:100%">
-						<tr><td align="right"><%=p.getProperty("createAccount.sn")%><font color="red">*</font>:</td><td><input type="text" name="firstName" required></td></tr>
-						<tr><td align="right"><%=p.getProperty("createAccount.gn")%><font color="red">*</font>:</td><td><input type="text" name="lastName" required></td></tr>
+						<tr><td align="right"><%=p.getProperty("createAccount.sn")%><font color="red">*</font>:</td><td><input type="text" name="firstName" onchange="validateText(this);" required></td></tr>
+						<tr><td align="right"><%=p.getProperty("createAccount.gn")%><font color="red">*</font>:</td><td><input type="text" name="lastName" onchange="validateText(this);" required></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.cn")%>:</td><td><input type="text" name="chineseName"></td></tr>
-						<tr><td align="right"><%=p.getProperty("createAccount.tel")%>:</td><td><input type="text" name="phone"></td></tr>
-						<tr><td align="right"><%=p.getProperty("createAccount.mobile")%>:</td><td><input type="text" name="mobile"></td></tr>
+						<tr><td align="right"><%=p.getProperty("createAccount.tel")%>:</td><td><input type="tel" name="phone" onchange="validatePhone(this);"></td></tr>
+						<tr><td align="right"><%=p.getProperty("createAccount.mobile")%>:</td><td><input type="tel" name="mobile" onchange="validatePhone(this);"></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.email")%><font color="red">*</font>:</td><td><input type="email" name="email" required></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.address")%>:</td><td><input type="text" name="address"></td></tr>
-						<tr><td align="right"><%=p.getProperty("createAccount.pwd")%><font color="red">*</font>:</td><td><input type="password" name="password" required></td></tr>
+						<tr><td align="right"><%=p.getProperty("createAccount.pwd")%><font color="red">*</font>:</td><td><input type="password" name="password" onchange="validatePassword(this);" required></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.pwd2")%><font color="red">*</font>:</td><td><input type="password" name="confirmPassword" required></td></tr>
 						<tr><td colspan="2" align="center"><input type="submit" value="<%=p.getProperty("createAccount.button.submit")%>"></td></tr>
 					</table> 

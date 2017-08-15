@@ -105,7 +105,8 @@ p {
 }
 
 #sidebar .link:before {
-	content: '•';
+	content: '\26AB';
+	padding-left: 1.4%;
 }
 
 #sidebar .folder-close:before {

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 
 <html>
+	<head>
+		<script src="inputValidation.js"></script>
+	</head>
 	<body>
 		<div id = "html-content">
 			<h1>Create Account</h1>
 			<fieldset>
 				<form>
 					<table style="width:100%">
-						<tr><td align="right">First Name:</td><td><input type="text" name="firstName"></td></tr>
+						<tr><td align="right">First Name:</td><td><input type="text" name="firstName" onchange="validate(this);"></td></tr>
 						<tr><td align="right">Last Name:</td><td><input type="text" name="lastName"></td></tr>
 						<tr><td align="right">Phone Number:</td><td><input type="telephone" name="phoneNumber"></td></tr>
 						<tr><td align="right">Email:</td><td><input type="email" name="email"></td></tr>
