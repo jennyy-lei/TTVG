@@ -110,7 +110,7 @@
 		<div id = "html-content">
 			<div class="forum-item-container">
 				<div class="title">
-					<a href="event.jsp?btnLanguage=<%=newLocaleStr%>"><%=p.getProperty("button.back")%></a>
+					<a href="event.jsp?btnLanguage=<%=newLocaleStr%>&btnLanguage=<%=newLocaleStr%>"><%=p.getProperty("button.back")%></a>
 				</div>
 				<table border="1">
 					<tr>
