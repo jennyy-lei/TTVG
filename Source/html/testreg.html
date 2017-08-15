@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>  
+  <head>  
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">  
+    <meta http-equiv="Content-Script-Type" content="text/javascript">  
+    <script type="text/javascript">  
+      var rePhone = /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/;  
+      var reName = /^[a-z 0-9.,]*$/gi;  
+      function validatePhone(phoneInput) {  
+        var OK = rePhone.exec(phoneInput.value);  
+        if (!OK)  
+          window.alert(phoneInput.value + ' isn\'t a phone number with area code!');  
+        else
+          window.alert('Thanks, your phone number is ' + OK[0]);  
+      }  
+      function validateName(nameInput) {  
+        	var OK = regEx.exec(textInput.value);
+	
+			if (!OK)  
+          window.alert(nameInput.value + ' isn\'t a name!');  
+        else
+          window.alert('Thanks, your phone number is ' + OK[0]);   
+      }  
+    </script>  
+  </head>  
+  <body>  
+    <p>Enter your phone number (with area code) and then click "Check".
+        <br>The expected format is like ###-###-####.</p>
+    <form action="#">  
+      <input id="phone" onchange="validatePhone(this);"><button onclick="validatePhone(this);">Check</button>
+      <input id="name" onchange="validateName(this);"><button onclick="validateName(this);">Check</button>
+    </form>  
+  </body>  
+</html>
