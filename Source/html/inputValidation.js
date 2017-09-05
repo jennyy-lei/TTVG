@@ -1,6 +1,16 @@
 var regEx;
 var OK = null;
 
+function generalValidate(textInput) {
+	regEx = /[" ' < >]*$/gi;
+	OK = regEx.exec(textInput.value);
+	
+	if (!OK) {
+		window.alert(textInput.value + ' is not valid');
+		textInput.value = "";
+	}
+}
+
 function validateText(textInput){
 	regEx = /^[a-z 0-9.,]*$/gi;
 	OK = regEx.exec(textInput.value);

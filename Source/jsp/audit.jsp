@@ -25,6 +25,7 @@
 	String fromDate = null;
 	String toDate = null;
 	StringBuffer condition = new StringBuffer();
+	String errorMsg = null;
 	
     try{
 		// This step will read hibernate.cfg.xml and prepare hibernate for use
@@ -55,6 +56,7 @@
         
     }catch(Exception e){
 		System.out.println(e.getMessage());
+		errorMsg = e.getMessage();
     }finally{
       // Close the session after work
     	if (dbSession != null) {
@@ -66,6 +68,7 @@
 
 <html>
 	<body>
+<%=condition + "/" + errorMsg%>
 		<link rel = "stylesheet" type = "text/css" href = "../html/forum.css">
 		<div id = "page-form">
 			<h1><%=p.getProperty("audit.title")%></h1>
@@ -126,7 +129,7 @@
 						<td><%=item.getContent()%></td>
 						<td><%=item.getAction()%></td>
 						<td><%=item.getCreatedDateTime()%></td>
-						<td><%=item.getAccount().getPerson().getGivenName() + " " + item.getAccount().getPerson().getLastName()%></td>
+						<td><%=item.getAccount() != null ? (item.getAccount().getPerson().getGivenName() + " " + item.getAccount().getPerson().getLastName()) : ""%></td>
 <%
 		}
 %>

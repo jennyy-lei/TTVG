@@ -64,7 +64,7 @@ public class Account extends Auditable{
 	}
 
 	@Column(name = "Disabled")
-	protected Boolean disabled;
+	protected Boolean disabled = false;
 	public Boolean getDisabled() {
 		return disabled;
 	}

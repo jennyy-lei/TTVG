@@ -3,6 +3,8 @@ package com.ttvg.shared.engine.database.table;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.ttvg.shared.engine.base.Auditable;
 
@@ -28,6 +30,7 @@ public class Audit extends Auditable{
 	 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "AccountId")
+    @NotFound(action = NotFoundAction.IGNORE)
     protected Account account;
     public Account getAccount() {
         return account;

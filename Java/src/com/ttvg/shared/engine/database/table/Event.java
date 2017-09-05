@@ -1,6 +1,5 @@
 package com.ttvg.shared.engine.database.table;
 
-import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 
@@ -106,6 +105,25 @@ public class Event extends EntityResolvable{
         this.ToTime = ToTime;
     }
 	
+	@Column(name = "DeadLine")
+    @Temporal(TemporalType.DATE)
+    protected Date deadLine;
+    public Date getDeadLine() {
+        return deadLine;
+    }
+    public void setDeadLine(Date deadLine) {
+        this.deadLine = deadLine;
+    }
+    
+	@Column(name = "Capacity")
+	protected int capacity = 0;
+	public int getCapacity() {
+		return capacity;
+	}
+	public void setCapacity( int capacity ) {
+		this.capacity = capacity;
+	}
+	
 	@Column(name = "DateTime")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dateTime;
@@ -117,11 +135,11 @@ public class Event extends EntityResolvable{
     }
 
 	 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "person_event_link",
-            joinColumns = @JoinColumn(name = "PersonId"),
-            inverseJoinColumns = @JoinColumn(name = "EventId")
+            joinColumns = @JoinColumn(name = "EventId"),
+            inverseJoinColumns = @JoinColumn(name = "PersonId")
     )
     protected Set<Person> persons;
 	public Set<Person> getPersons() {

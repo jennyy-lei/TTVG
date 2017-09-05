@@ -57,9 +57,8 @@ public class Person extends EntityResolvable {
 	public void setGuardian( Person guardian ) {
 		this.guardian = guardian;
 	}
-
 	 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "person_event_link",
             joinColumns = @JoinColumn(name = "PersonId"),

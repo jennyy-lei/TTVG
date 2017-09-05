@@ -54,7 +54,7 @@
 		<!-- Chinese character set -->
 		<meta charset="utf-8">
 	</head>
-	<body onload='load_page("html/home.html")'>
+	<body onload='load_page("html/showCalendar.html")'>
 		<div id = "header">
 			<div id = "site-title">
 				<h1>TTVG</h1>
@@ -65,12 +65,12 @@
 <%
 	//If the current user is login
 	if ( account != null ){
+	//If the current user is login
 %>
 					<button type="submit" id="btnLogOut" name="btnLogOut" onclick='load_page("jsp/logoutPost.jsp"); return true;'><%=p.getProperty("button.logout")%></button>
 					<!--button type="submit" id="btnAddDependent" name="btnAddDependent" onclick='load_page("jsp/addDependent.jsp"); return false;'><%=p.getProperty("button.addDependent")%></button-->
 					<!--button type="submit" id="btnMyProfile" name="btnMyProfile" onclick='load_page("jsp/addDependent.jsp"); return false;'><%=p.getProperty("button.myProfile")%></button-->
 <%
-	//If the current user is login
 	} else {
 %>
 					<button type="submit" class = "btnPageSettings" id="btnCreate" name="btnCreate" onclick='load_page("jsp/createAccount.jsp"); return false;'><%=p.getProperty("button.createAcc")%></button>
@@ -79,6 +79,16 @@
 	}
 %>
 					<button type="submit" class = "btnPageSettings" id="btnLanguage" name="btnLanguage" value="<%=newLocaleStr%>" onclick='toggle_language()'><%=p.getProperty("button.language")%></button>
+<%
+	//If the current user is login
+	if ( account != null ){
+	//If the current user is login
+		Person person = account.getPerson();
+%>
+					<i> - <%=person.getLastName()%>, <%=person.getGivenName()%></i>
+<%
+	}
+%>
 				</form>
 			</div>
 		</div>

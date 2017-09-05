@@ -45,7 +45,7 @@ p {
 #site-menu {
     position: absolute; /*or fixed*/
     top: 4.5%;
-    right: 5%;
+    right: 10%;
 }
 
 .btnPageSettings {

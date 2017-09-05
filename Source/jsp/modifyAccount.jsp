@@ -131,11 +131,11 @@
 						<tr><td align="right"><%=p.getProperty("modifyAccount.gn")%>:</td><td><input type="text" name="lastName" value="<%=user.getLastName()%>" onchange="validateText(this);"></td></tr>
 						<tr><td align="right"><%=p.getProperty("modifyAccount.cn")%>:</td><td><input type="text" name="chineseName" value="<%=user.getChineseName()%>"></td></tr>
 						<tr><td align="right"><%=p.getProperty("modifyAccount.tel")%>:</td><td><input type="text" name="phone" value="<%=user.getPhone()%>" onchange="validatePhone(this);"></td></tr>
-						<tr><td align="right"><%=p.getProperty("modifyAccount.mobile")%>:</td><td><input type="text" name="mobile" value="<%=user.getMobile()%>" onchange="validatePhone(this);"></td></tr>
+						<!--tr><td align="right"><%=p.getProperty("modifyAccount.mobile")%>:</td><td><input type="text" name="mobile" value="<%=user.getMobile()%>" onchange="validatePhone(this);"></td></tr-->
 						<tr><td align="right"><%=p.getProperty("modifyAccount.email")%>:</td><td><input type="email" name="email" value="<%=account.getEmail()%>"></td></tr>
-						<tr><td align="right"><%=p.getProperty("modifyAccount.address")%>:</td><td><input type="text" name="address" value="<%=user.getAddress()%>"></td></tr>
-						<tr><td align="right"><%=p.getProperty("modifyAccount.pwd")%>:</td><td><input type="password" name="password" onchange="validatePassword(this);"></td></tr>
-						<tr><td align="right"><%=p.getProperty("modifyAccount.pwd2")%>:</td><td><input type="password" name="confirmPassword" onchange="validatePassword(this);"></td></tr>
+						<!--tr><td align="right"><%=p.getProperty("modifyAccount.address")%>:</td><td><input type="text" name="address" value="<%=user.getAddress()%>"></td></tr-->
+						<!--tr><td align="right"><%=p.getProperty("modifyAccount.pwd")%>:</td><td><input type="password" name="password" onchange="validatePassword(this);"></td></tr-->
+						<!--tr><td align="right"><%=p.getProperty("modifyAccount.pwd2")%>:</td><td><input type="password" name="confirmPassword" onchange="validatePassword(this);"></td></tr-->
 						<tr><td colspan="2" align="center"><input type="submit" value="<%=p.getProperty("modifyAccount.button.submit")%>"></td></tr>
 					</table> 
 				</form>
