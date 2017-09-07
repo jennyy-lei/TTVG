@@ -21,6 +21,7 @@
 	String op = null;
 	String userId = null;
 	String eventId = null;
+	String from = null;
 	Event event = null;
 	Person toUser = user;
 	List<Object> childrenList = null;
@@ -33,6 +34,7 @@
 		op = request.getParameter("op");
 		userId = request.getParameter("userId");
 		eventId = request.getParameter("eventId");
+		from = request.getParameter("from");
 		
 		if ( userId != null && userId.length() > 0 && !userId.equalsIgnoreCase("" + user.getId()) ) {
 			toUser = TableRecordOperation.getRecord(Integer.parseInt(userId), Person.class);
@@ -110,7 +112,7 @@
 		<div id = "html-content">
 			<div class="forum-item-container">
 				<div class="title">
-					<a href="event.jsp?btnLanguage=<%=newLocaleStr%>&btnLanguage=<%=newLocaleStr%>"><%=p.getProperty("button.back")%></a>
+					<a href="<%=from != null && from.length() > 0 ? from : "event.jsp"%>?btnLanguage=<%=newLocaleStr%>&btnLanguage=<%=newLocaleStr%>"><%=p.getProperty("button.back")%></a>
 				</div>
 				<table border="1">
 					<tr>
@@ -191,6 +193,8 @@
 					<th><%=p.getProperty("event.date.to")%></th>
 					<th><%=p.getProperty("event.time.from")%></th>
 					<th><%=p.getProperty("event.time.to")%></th>
+					<th><%=p.getProperty("event.deadline")%></th>
+					<th><%=p.getProperty("event.available")%></th>
 				</tr>
 				<tr>
 					<td><%=event.getType()%></td>
@@ -199,6 +203,8 @@
 					<td><%=event.getToDate()%></td>
 					<td><%=event.getFromTime()%></td>
 					<td><%=event.getToTime()%></td>
+					<td><%=event.getDeadLine()%></td>
+					<td><%=event.getCapacity() - event.getPersons().size()%></td>
 				</tr>
 			</table>
 		</div>

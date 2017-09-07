@@ -20,14 +20,16 @@
 
 <%
     Session dbSession = null;
-	List<Object> eventList = null;
+	List<Object> childrenList = null;
 	
     try{
 		// This step will read hibernate.cfg.xml and prepare hibernate for use
     	dbSession = MyDatabaseFeactory.getSession();
 		
-		//Search for current list of event items
-        eventList = TableRecordOperation.findAllRecord("from Event order by DateTime desc");
+		if ( user != null ) {
+			//Search for current list of children
+			childrenList = TableRecordOperation.findAllRecord("from Person where mother='" + user.getId() + "' Or father='" + user.getId() + "' Or guardian='" + user.getId() + "' order by givenName");
+		}
         
     }catch(Exception e){
 		System.out.println(e.getMessage());
@@ -46,7 +48,7 @@
 		<div id = "page-content">
 <%
 	//Display the current event list
-	if ( eventList != null ){
+	if ( user != null ){
 %>
 			<div class="forum-item-container">
 				<table border="1">
@@ -54,29 +56,46 @@
 						<th><%=p.getProperty("eventReview.title")%></th>
 						<th><%=p.getProperty("eventReview.type")%></th>
 						<th><%=p.getProperty("eventReview.category")%></th>
-						<th><%=p.getProperty("eventReview.date.from")%></th>
-						<th><%=p.getProperty("eventReview.date.to")%></th>
-						<th><%=p.getProperty("eventReview.time.from")%></th>
-						<th><%=p.getProperty("eventReview.time.to")%></th>
+						<th><%=p.getProperty("eventReview.sn")%></th>
+						<th><%=p.getProperty("eventReview.gn")%></th>
+						<th><%=p.getProperty("eventReview.cn")%></th>
 					</tr>
 <%
-		for ( Object obj : eventList ){
-			Event item = ((Event)obj);
+		for ( Event item : user.getEvents() ){
 %>
 					<tr>
 						<td>
-							<a href="eventList.jsp?eventId=<%=item.getId()%>&btnLanguage=<%=newLocaleStr%>"><%=item.getTitle()%></a>
+							<a href="eventRegister.jsp?eventId=<%=item.getId()%>&from=eventReview.jsp&btnLanguage=<%=newLocaleStr%>"><%=item.getTitle()%></a>
 						</td>
 						<td><%=item.getType()%></td>
 						<td><%=item.getCategory()%></td>
-						<td><%=item.getFromDate()%></td>
-						<td><%=item.getToDate()%></td>
-						<td><%=item.getFromTime()%></td>
-						<td><%=item.getToTime()%></td>
+						<td><%=user.getGivenName()%></td>
+						<td><%=user.getLastName()%></td>
+						<td><%=user.getChineseName()%></td>
 					</tr>
 <%
 		}
 %>
+<%
+		for ( Object obj : childrenList ){
+			Person person = ((Person)obj);
+			for ( Event item : person.getEvents() ){
+%>
+					<tr>
+						<td>
+							<a href="eventRegister.jsp?eventId=<%=item.getId()%>&from=eventReview.jsp&btnLanguage=<%=newLocaleStr%>"><%=item.getTitle()%></a>
+						</td>
+						<td><%=item.getType()%></td>
+						<td><%=item.getCategory()%></td>
+						<td><%=person.getGivenName()%></td>
+						<td><%=person.getLastName()%></td>
+						<td><%=person.getChineseName()%></td>
+					</tr>
+<%
+			}
+		}
+%>
+
 				</table>
 			</div>
 <%

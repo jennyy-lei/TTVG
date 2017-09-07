@@ -27,6 +27,15 @@
 	String title = null;
 	String content = null;
 	Event event = null;
+
+	String eventType = null;
+	String eventCategory = null;
+	String fromDate = null;
+	String toDate = null;
+	String fromTime = null;
+	String toTime = null;
+	String deadLine = null;
+	String capacity = null;
 	
     try{
 		// This step will read hibernate.cfg.xml and prepare hibernate for use
@@ -38,14 +47,14 @@
 		eventId = request.getParameter("eventId");
 		title = request.getParameter("title");
 		content = request.getParameter("content");
-		String eventType = request.getParameter("eventType");
-		String eventCategory = request.getParameter("eventCategory");
-		String fromDate = request.getParameter("fromDate");
-		String toDate = request.getParameter("toDate");
-		String fromTime = request.getParameter("fromTime");
-		String toTime = request.getParameter("toTime");
-		String deadLine = request.getParameter("deadLine");
-		String capacity = request.getParameter("capacity");
+		eventType = request.getParameter("eventType");
+		eventCategory = request.getParameter("eventCategory");
+		fromDate = request.getParameter("fromDate");
+		toDate = request.getParameter("toDate");
+		fromTime = request.getParameter("fromTime");
+		toTime = request.getParameter("toTime");
+		deadLine = request.getParameter("deadLine");
+		capacity = request.getParameter("capacity");
 		if ( op == null || op.length() == 0 )
 			op = Constant.PARAM_ACTION_ADD;
 		if ( title != null && title.length() > 0 )
@@ -132,6 +141,7 @@
 
 <html>
 	<body>
+<p>fromDate=<%=fromDate%>/toDate=<%=toDate%>/deadLine=<%=deadLine%>/eventId=<%=eventId%> </p>
 		<link rel = "stylesheet" type = "text/css" href = "../html/forum.css">
 		<div id = "page-content">
 <%
@@ -249,7 +259,7 @@
 						<tr><td align="right"><%=p.getProperty("event.date.to")%>(mm/dd/yyy)<font color="red">*</font>:</td><td><input type="date" name="toDate" required></td></tr>
 						<tr><td align="right"><%=p.getProperty("event.time.from")%>(hh:mm AM/PM):</td><td><input type="time" name="fromTime"></td></tr>
 						<tr><td align="right"><%=p.getProperty("event.time.to")%>(hh:mm AM/PM):</td><td><input type="time" name="toTime"></td></tr>
-						<tr><td align="right"><%=p.getProperty("event.deadline")%>(mm/dd/yyy)<font color="red">*</font>:</td><td><input type="date" name="deadline" required></td></tr>
+						<tr><td align="right"><%=p.getProperty("event.deadline")%>(mm/dd/yyy)<font color="red">*</font>:</td><td><input type="date" name="deadLine" required></td></tr>
 						<tr><td align="right"><%=p.getProperty("event.capacity")%><font color="red">*</font>:</td><td><input type="number" name="capacity" required></td></tr>
 						<tr><td colspan="2" align="center"><input type="submit" value="<%=p.getProperty("event.button.submit")%>"></td></tr>
 					</table> 
