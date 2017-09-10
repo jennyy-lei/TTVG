@@ -8,6 +8,8 @@ public class Constant {
 
 	public static final String DELIMETER_DDL_ITEM			= "/";
 	public static final String DELIMETER_DDL_LIST			= "|";
+
+	public static final String DELIMETER_ROLE_ITEM			= ",";
 	
 	public static final String LOCALE_CN					= "cn";
 	public static final String LOCALE_EN					= "en";

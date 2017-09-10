@@ -48,6 +48,12 @@
 		if ( chineseName != null && chineseName.length() > 0 )
 			chineseName = new String(chineseName.getBytes("ISO8859_1"), "UTF-8");
 		
+        Object obj = null;
+		if ( (email != null && email.length() > 0) && (phone != null && phone.length() > 0) ) 
+			obj = TableRecordOperation.findRecord("from Account where Email='" + email + "' or person.phone='" + phone + "'");
+		if ( obj != null ){
+			session.setAttribute("errorMessage",  "#message.error.user.duplicated");
+		} else
 		//Save the posted account item if not empty
 		if ( (firstName != null && firstName.length() > 0) && (lastName != null && lastName.length() > 0)/* && password.equals(confirmPassword)*/ ) {
 			transaction = dbSession.beginTransaction();
@@ -76,6 +82,7 @@
     }catch(Exception e){
 		if ( transaction != null ) transaction.rollback();
 		System.out.println(e.getMessage());
+		session.setAttribute("errorMessage",  "#message.error.system");
     }finally{
       // Close the session after work
     	if (dbSession != null) {
@@ -83,6 +90,7 @@
 				dbSession.flush();
 				dbSession.close();
 			}catch(Exception ex1){
+				session.setAttribute("errorMessage",  ex1.getMessage());
 			}				
     	}
 	}
@@ -93,6 +101,9 @@
 		<script src="../html/inputValidation.js"></script>
 	</head>
 	<body>
+
+<%@include file="../includes/errorMessage.jsp" %>
+
 		<div id = "html-content">
 <%
 	if ( person == null ) {
@@ -104,7 +115,7 @@
 						<tr><td align="right"><%=p.getProperty("createAccount.sn")%><font color="red">*</font>:</td><td><input type="text" name="firstName" onchange="validateText(this);" required></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.gn")%><font color="red">*</font>:</td><td><input type="text" name="lastName" onchange="validateText(this);" required></td></tr>
 						<tr><td align="right"><%=p.getProperty("createAccount.cn")%>:</td><td><input type="text" name="chineseName" onchange="generalValidate(this);"></td></tr>
-						<tr><td align="right"><%=p.getProperty("createAccount.tel")%>:</td><td><input type="tel" name="phone" onchange="validatePhone(this);"></td></tr>
+						<tr><td align="right"><%=p.getProperty("createAccount.tel")%>:<font color="red">*</font></td><td><input type="tel" name="phone" onchange="validatePhone(this);" required></td></tr>
 						<!--tr><td align="right"><%=p.getProperty("createAccount.mobile")%>:</td><td><input type="tel" name="mobile" onchange="validatePhone(this);"></td></tr-->
 						<tr><td align="right"><%=p.getProperty("createAccount.email")%><font color="red">*</font>:</td><td><input type="email" name="email" required></td></tr>
 						<!--tr><td align="right"><%=p.getProperty("createAccount.address")%>:</td><td><input type="text" name="address"></td></tr-->

@@ -15,7 +15,6 @@
 <%@include file="../includes/account.jsp" %>
 
 <%
-	String errorMessage = "";
 
     Session dbSession = null;
 	Transaction transaction = null;
@@ -54,6 +53,12 @@
 			password = request.getParameter("password");
 			confirmPassword = request.getParameter("confirmPassword");
 			
+			Object obj = null;
+			if ( (email != null && email.length() > 0) && (phone != null && phone.length() > 0) ) 
+				obj = TableRecordOperation.findRecord("from Account where Email='" + email + "' or person.phone='" + phone + "'");
+			if ( obj != null ){
+				session.setAttribute("errorMessage",  "#message.error.user.duplicated");
+			} else
 			//Save the posted account item if not empty
 			if ( (firstName != null && firstName.length() > 0) && (lastName != null && lastName.length() > 0) ) {
 				transaction = dbSession.beginTransaction();
@@ -97,7 +102,7 @@
     }catch(Exception e){
 		if ( transaction != null ) transaction.rollback();
 		System.out.println(e.getMessage());
-		errorMessage = e.getMessage();
+		session.setAttribute("errorMessage",  "#message.error.system");
     }finally{
       // Close the session after work
     	if (dbSession != null) {
@@ -105,7 +110,7 @@
 				dbSession.flush();
 				dbSession.close();
 			}catch(Exception ex1){
-				errorMessage = ex1.getMessage();
+				session.setAttribute("errorMessage",  ex1.getMessage());
 			}				
     	}
 	}
@@ -116,7 +121,9 @@
 		<script src="../html/inputValidation.js"></script>
 	</head>
 	<body>
-<%=errorMessage%>
+
+<%@include file="../includes/errorMessage.jsp" %>
+
 		<div id = "html-content">
 <%
 	if ( user != null  ) {
